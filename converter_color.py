@@ -7,8 +7,8 @@ import random
 #####################   Defs:   ###########################
 
 # Define the input and output file paths
-input_file = '11698498.json'
-output_file = '11698498.geojson'
+input_file  = '12905278.json'
+output_file = '12905278.geojson'
 
 def generate_random_hex_color():
     return "#{:06x}".format(random.randint(0, 0xFFFFFF))
@@ -26,6 +26,13 @@ def calculate_angle(vec1, vec2):
     mag1 = math.sqrt(vec1[0]**2 + vec1[1]**2)
     mag2 = math.sqrt(vec2[0]**2 + vec2[1]**2)
     cos_angle = dot_product / (mag1 * mag2)
+    
+    # corectii pentru erori de tipul cos = 1.00000000000002 
+    if(cos_angle > 1): 
+        cos_angle = 1
+    if(cos_angle < -1):
+        cos_angle = -1
+        
     angle = math.acos(cos_angle)
     return math.degrees(angle)
 
@@ -53,7 +60,7 @@ def create_line_segments(data, all_points_colors):
         prev_id = all_points_colors[i - 1][0] 
         color = all_points_colors[i - 1][1]  
 
-        print(f"i: {i}, i-1: {i - 1} Prev: {all_points_colors[i-1]}, curent: {all_points_colors[i]}")
+        # print(f"i: {i}, i-1: {i - 1} Prev: {all_points_colors[i-1]}, curent: {all_points_colors[i]}")
 
 
         data_segment = [(
